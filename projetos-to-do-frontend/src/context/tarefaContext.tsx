@@ -126,7 +126,7 @@ export function TarefaProvider({
     try {
       const novaOrdem = pendentes.length;
       const res = await criarTarefaProjeto(projetoId, titulo, novaOrdem);
-      const novaLista = [...tarefasLocais, res.data];
+      const novaLista = [...tarefasLocais, res?.data];
       setTarefasLocais(novaLista);
       onChange(novaLista);
       fetchProjetos();
