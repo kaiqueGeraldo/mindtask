@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import { createProjeto } from "@/services/projectService";
 import { useUser } from "@/hooks/useUser";

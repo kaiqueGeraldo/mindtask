@@ -35,8 +35,7 @@ export default function ProjetoScreen() {
   >([]);
   const [mensagem, setMensagem] = useState<string | null>(null);
 
-  const { loading: loadingTecnologias, tecnologiasDisponiveis } =
-    useTecnologias();
+  const { tecnologiasDisponiveis } = useTecnologias();
 
   const { projetoEmEdicao, setProjetoEmEdicao } = useContextMenu();
 

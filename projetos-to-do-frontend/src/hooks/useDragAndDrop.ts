@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useRef, useState } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useGroup } from "@/hooks/useGroup";

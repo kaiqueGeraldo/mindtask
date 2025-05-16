@@ -6,7 +6,6 @@ import { trocarConta } from "@/services/accountService";
 import { setCookie } from "cookies-next";
 import { Usuario } from "@/models/usuarioModel";
 import { useModals } from "@/hooks/useModals";
-import { useRouter } from "next/navigation";
 
 interface ManageAccountModalProps {
   isOpen: boolean;
@@ -19,7 +18,6 @@ export function ManageAccountModal({
   onClose,
   onSuccess,
 }: ManageAccountModalProps) {
-  const router = useRouter();
   const { user } = useUser();
   const {
     setLogoutModalOpen,
