@@ -57,7 +57,7 @@ export default function AprovarVinculoScreen() {
   };
 
   useEffect(() => {
-    const animation = (lottieRef.current as any)?.lottie;
+    const animation = lottieRef.current?.animationItem;
 
     if (animation) {
       const handleComplete = () => {

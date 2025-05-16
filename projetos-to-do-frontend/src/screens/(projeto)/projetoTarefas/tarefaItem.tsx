@@ -36,7 +36,9 @@ export function TarefaItem({ tarefa }: TarefaItemProps) {
     >
       <button
         onClick={() => {
-          tarefaEmEdicao === tarefa.id ? null : handleToggleFeito(tarefa.id);
+          if (tarefaEmEdicao !== tarefa.id) {
+            handleToggleFeito(tarefa.id);
+          }
         }}
         className="text-white cursor-pointer"
       >

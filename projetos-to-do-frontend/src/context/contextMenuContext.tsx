@@ -101,8 +101,6 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
     id: number,
     type: "grupo" | "projeto" | "tarefa"
   ) {
-    const projetoAtual = projetos.find((p) => p.id === id);
-
     dispatchContextAction(
       action,
       id,

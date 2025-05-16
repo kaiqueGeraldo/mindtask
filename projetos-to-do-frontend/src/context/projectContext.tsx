@@ -54,7 +54,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
 
       const projetosOrdenados = response!.data
         .sort((a: Projeto, b: Projeto) => a.ordem - b.ordem)
-        .map((projeto: any) => {
+        .map((projeto: Projeto) => {
           const tarefasPendentes = projeto.tarefas
             .filter((t: Tarefa) => !t.feito)
             .sort(

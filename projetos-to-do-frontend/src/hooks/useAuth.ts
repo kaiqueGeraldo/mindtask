@@ -196,7 +196,8 @@ export function useAuth() {
       await clearUser();
       onClose();
       router.push("/auth");
-    } catch (error) {
+    } catch (error: unknown) {
+      console.log(error)
       alert("Erro ao sair da conta! Tente novamente.");
     }
   };

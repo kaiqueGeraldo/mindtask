@@ -13,7 +13,7 @@ interface DraggableItemProps {
   containerId: string;
 }
 
-export function DraggableItem({ projeto, containerId }: DraggableItemProps) {
+export function DraggableItem({ projeto }: DraggableItemProps) {
   const { listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({
       id: `projeto-${projeto.id}`,

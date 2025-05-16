@@ -19,7 +19,7 @@ export function SucessoVinculoModal({
       <div className="flex flex-col gap-2">
         <p className="text-gray-300 text-sm">
           A nova conta foi vinculada com sucesso! Você já pode fechar este card
-          e acessar as informações no menu 'Gerenciar Conta'.
+          e acessar as informações no menu &quot;Gerenciar Conta&quot;.
         </p>
 
         <div className="flex justify-end mt-4">
