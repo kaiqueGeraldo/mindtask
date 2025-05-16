@@ -4,19 +4,25 @@ Aplicativo fullstack de organização pessoal que permite salvar ideias, organiz
 
 🔗 **Live Site**: [https://mindtask-fawn.vercel.app/](https://mindtask-fawn.vercel.app/)
 
-⚠️ O backend está hospedado no Railway e utiliza SQL Server como banco de dados.
+⚠️ O backend está hospedado no **Railway** e utiliza **SQL Server** como banco de dados.
 
 ---
 
-## 📁 Estrutura do Projeto
-
-Este repositório contém duas partes principais:
+## 📁 Estrutura Geral do Repositório
 
 ```
 mindtask/
-├── backend/       # API em Node.js para autenticação, projetos, grupos e tarefas
-└── frontend/      # Interface com Next.js e Tailwind para gestão de ideias e projetos
+├── backend/        # API REST em Node.js
+├── frontend/       # Interface em Next.js com Tailwind
+└── consultas/      # Scripts SQL de criação de tabelas e dados iniciais
 ```
+
+### 📜 Pastas de Consultas SQL
+
+A pasta `consultas/` contém scripts úteis para inicialização do banco de dados:
+
+* `create_tables.sql` → Criação das tabelas utilizadas pelo sistema
+* `insert_tecnologias.sql` → Inserção inicial de tecnologias disponíveis
 
 ---
 
@@ -24,29 +30,27 @@ mindtask/
 
 ### 🔧 Backend
 
-* Node.js
-* Express
+* Node.js + Express
 * SQL Server
-* JWT (Autenticação)
-* bcrypt (Hash de senhas)
+* JWT (autenticação)
+* bcrypt (hash de senhas)
 * dotenv
 * CORS
 
 ### 💻 Frontend
 
-* React (Next.js App Router com "use client")
+* React (Next.js App Router com `use client`)
 * Tailwind CSS
 * TypeScript
-* Zustand (gerenciamento de estado)
 * shadcn/ui
-* localStorage e cookies para persistência
-* dnd-kit (drag and drop para projetos e grupos)
+* dnd-kit (drag and drop para grupos e projetos)
+* localStorage e cookies (persistência de sessão e preferências)
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 🚀 Como Rodar o Projeto Localmente
 
-### 1. Clone o repositório
+### 1. Clone o Repositório
 
 ```bash
 git clone https://github.com/kaiqueGeraldo/mindtask.git
@@ -63,7 +67,7 @@ npm run dev
 
 A API estará disponível em: `http://localhost:3001`
 
-> Configure as variáveis de ambiente no arquivo `.env` com as credenciais do banco SQL Server.
+> ⚠️ Configure suas variáveis de ambiente no arquivo `.env` com as credenciais do SQL Server.
 
 ### 3. Frontend
 
@@ -73,67 +77,85 @@ npm install
 npm run dev
 ```
 
-Acesse: `http://localhost:3000`
-
----
-
-## 🔍 Funcionalidades
-
-* Criar, editar e excluir **projetos** e **grupos**
-* Adicionar **tarefas** com status (não iniciada, em andamento, finalizada)
-* Salvar ideias soltas ou organizá-las por grupo
-* Marcar projetos como **favoritos**
-* Drag and drop para reorganizar projetos entre grupos
-* Edição inline de nomes de grupos/projetos
-* Autenticação com **contas vinculadas** (usuários podem alternar entre contas associadas)
-* Interface moderna, responsiva e intuitiva
-
----
-
-## 📌 Como Funciona
-
-1. O usuário se cadastra e faz login
-2. Pode criar grupos e projetos com tarefas internas
-3. Os dados são salvos no banco via API Node.js
-4. As interações são refletidas em tempo real na interface Next.js
-5. Preferências como favoritos são salvas no `localStorage`
+Acesse o frontend em: `http://localhost:3000`
 
 ---
 
 ## 📂 Estrutura de Arquivos
 
-### Backend (/backend)
+### 🔙 Backend (`/backend`)
 
-* `server.js` → inicia o servidor Express
-* `controllers/` → lógica de autenticação, projetos, tarefas, etc.
-* `routes/` → rotas da API
-* `models/` → modelos e queries SQL
-* `middleware/` → JWT, validações, etc.
+Organizado de forma modular seguindo boas práticas:
 
-### Frontend (/frontend)
+```
+backend/
+├── src/
+│   ├── config/       # Configuração da conexão com o banco de dados
+│   ├── controllers/  # Lógica das rotas (auth, projetos, grupos, tarefas)
+│   ├── middleware/   # Middlewares de autenticação e validação
+│   ├── models/       # Modelos e queries SQL
+│   ├── routes/       # Definição das rotas da API
+│   ├── services/     # Lógica de negócio reutilizável
+│   ├── server.js     # Ponto de entrada da API Express
+```
 
-* `app/` → estrutura App Router do Next.js
-* `components/` → componentes reutilizáveis (Navbar, Modais, Inputs)
-* `context/` → controle global de autenticação, sidebar e modais
-* `pages/` → páginas como Home, Projeto, Login
-* `hooks/` → hooks personalizados (ex: uso de drag and drop, edição inline)
+### 🖥️ Frontend (`/frontend`)
+
+Estrutura escalável e organizada por responsabilidades:
+
+```
+frontend/
+├── src/
+│   ├── app/              # Estrutura de rotas do Next.js
+│   │   ├── (public)/     # Rotas públicas (login, cadastro, etc.)
+│   │   └── (private)/    # Rotas protegidas (dashboard, projetos)
+│   ├── components/       # Componentes reutilizáveis (Navbar, Inputs, Modais)
+│   ├── context/          # Contextos globais (auth, sidebar, modal)
+│   ├── dispatcher/       # Dispatcher de ações do menu de contexto
+│   ├── hooks/            # Hooks personalizados (drag and drop, edição inline)
+│   ├── layouts/          # Layouts principais (Privado, Público)
+│   ├── lib/              # Utilitários auxiliares (cookies, axios, etc.)
+│   ├── lottie/           # Animações Lottie
+│   ├── models/           # Tipagens e modelos do frontend
+│   ├── screens/          # Telas principais (Home, Projeto, Login)
+│   ├── service/          # Serviços de comunicação com a API
+│   ├── utils/            # Funções utilitárias gerais
+│   └── validators/       # Validações de formulários e dados
+```
+
+---
+
+## 🔍 Funcionalidades
+
+* Criar, editar e excluir **projetos**, **grupos** e **tarefas**
+* Marcar tarefas com status: *não iniciada*, *em andamento* ou *concluída*
+* Salvar ideias soltas ou organizá-las em grupos
+* **Favoritar projetos** e exibir na seção destacada
+* Reorganização com **drag and drop** entre grupos e dentro dos grupos
+* Edição inline de nomes de grupos e projetos
+* Autenticação com suporte a **contas vinculadas**
+* Interface moderna, responsiva e altamente interativa
+
+---
+
+## 📌 Como Funciona
+
+1. Usuário se cadastra ou faz login
+2. Pode criar grupos, projetos e tarefas personalizadas
+3. As ações são enviadas para a API em Node.js e salvas no SQL Server
+4. O frontend em Next.js atualiza a interface em tempo real com base nas interações
+5. Preferências como favoritos são armazenadas no `localStorage`
 
 ---
 
 ## 🖼️ Screenshots
 
-🔸 Página Principal com Projetos e Grupos
-🔸 Tela de Tarefas por Projeto com animações de abas
-🔸 Modal de criação de ideias e projetos
-🔸 Login com troca de contas vinculadas
+📸 *Imagens ilustrativas do sistema:*
 
----
-
-## ⚠️ Observações
-
-* Projeto em desenvolvimento contínuo
-* Foco em aprendizado e organização pessoal de ideias
-* Ideal como base para apps de produtividade
+* Dashboard com grupos e projetos
+* Tela de tarefas com animações de abas (status)
+* Modal de criação de ideias e tarefas
+* Login com troca de contas vinculadas
 
 ---
 
@@ -141,16 +163,15 @@ Acesse: `http://localhost:3000`
 
 * Node.js 18 ou superior
 * npm
-* Banco de dados SQL Server (local ou em nuvem)
+* SQL Server (local ou hospedado)
 
 ---
 
 ## 📝 Licença
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-Sinta-se livre para usar, modificar e compartilhar. 😊
+Este projeto está licenciado sob a **Licença MIT**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
 Feito com ❤️ por **Kaique Geraldo**
-[LinkedIn](https://www.linkedin.com/in/kaique-geraldo/) | [GitHub](https://github.com/kaiqueGeraldo) | [kaiique2404@gmail.com](mailto:kaiique2404@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/kaique-geraldo/) | [GitHub](https://github.com/kaiqueGeraldo) | [Email](mailto:kaiique2404@gmail.com)
