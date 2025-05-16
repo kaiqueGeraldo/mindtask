@@ -1,4 +1,4 @@
-export const URL_BASE = "http://localhost:5005/api";
+export const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE!;
 
 type ApiRequestOptions = RequestInit & { isBlob?: boolean };
 
