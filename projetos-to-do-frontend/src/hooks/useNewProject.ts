@@ -23,7 +23,7 @@ export function useNewProject(
     setLoading(true);
     try {
       const response = await createProjeto(user!.id, grupoId!, nome, descricao);
-      const novoProjetoId = response.data.id;
+      const novoProjetoId = response?.data.id;
 
       resetForm();
       onSuccess!();

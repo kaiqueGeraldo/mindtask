@@ -15,7 +15,7 @@ export function useTecnologias() {
 
   useEffect(() => {
     getAllTechnology()
-      .then((res) => setTecnologiasDisponiveis(res.data))
+      .then((res) => setTecnologiasDisponiveis(res?.data))
       .catch((err) => console.error("Erro ao buscar tecnologias:", err));
   }, []);
 
