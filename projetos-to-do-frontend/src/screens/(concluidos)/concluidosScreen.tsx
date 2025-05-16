@@ -1,0 +1,27 @@
+"use client";
+
+import ListaProjetosBase from "@/components/layouts/listaProjetosBase";
+import { useProject } from "@/hooks/useProject";
+import { useGroup } from "@/hooks/useGroup";
+import { useState } from "react";
+
+export default function ArquivadosScreen() {
+  const { projetos, fetchProjetos } = useProject();
+  const { fetchGrupos } = useGroup();
+  const [busca, setBusca] = useState("");
+
+  const projetosArquivados = projetos.filter(
+    (p) => p.status === 2 && p.nome.toLowerCase().includes(busca.toLowerCase())
+  );
+
+  return (
+    <ListaProjetosBase
+      titulo="Concluídos"
+      projetos={projetosArquivados}
+      busca={busca}
+      setBusca={setBusca}
+      fetchProjetos={fetchProjetos}
+      fetchGrupos={fetchGrupos}
+    />
+  );
+}

@@ -1,0 +1,29 @@
+# Ignorar node_modules em qualquer lugar
+**/node_modules
+
+# Ignorar dist/ (compilação do backend TypeScript)
+backend/dist
+
+# Ignorar build do Next.js
+frontend/.next
+
+# Ignorar arquivos do Vercel (caso use)
+.vercel
+
+# Ignorar ambiente local
+**/.env
+**/.env.*
+
+# Ignorar arquivos de log
+**/*.log
+
+# Ignorar diretórios do editor
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+
+# Outros arquivos temporários
+*.swp
+*.swo
