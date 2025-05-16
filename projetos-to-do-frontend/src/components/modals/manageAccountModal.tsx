@@ -29,7 +29,7 @@ export function ManageAccountModal({
   async function handleTrocarConta(contaId: number) {
     try {
       const response = await trocarConta(contaId);
-      setCookie("token", response.data.token);
+      setCookie("token", response?.data.token);
       onSuccess();
       window.location.href = "/";
     } catch (error) {

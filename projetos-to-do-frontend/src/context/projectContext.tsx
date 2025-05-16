@@ -52,7 +52,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await getAllProjetos(user.id);
 
-      const projetosOrdenados = response!.data
+      const projetosOrdenados = response?.data
         .sort((a: Projeto, b: Projeto) => a.ordem - b.ordem)
         .map((projeto: Projeto) => {
           const tarefasPendentes = projeto.tarefas

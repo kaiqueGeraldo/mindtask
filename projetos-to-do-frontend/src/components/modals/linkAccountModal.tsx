@@ -22,7 +22,7 @@ export function LinkAccountModal({ isOpen, onClose }: LinkAccountModalProps) {
     // Gera token ao abrir o modal
     gerarVinculoToken()
       .then((response) => {
-        setVinculoToken(response.data.token);
+        setVinculoToken(response?.data.token);
       })
       .catch((err) => {
         console.error("Erro ao gerar token de vínculo:", err);

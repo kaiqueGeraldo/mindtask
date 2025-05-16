@@ -27,12 +27,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const response = await getUserFromToken();
       setUser({
-        id: response!.data.id,
-        nome: response!.data.nome,
-        email: response!.data.email,
-        vinculadas: response!.data.vinculadas,
-        usandoContaVinculada: response!.data.usandoContaVinculada,
-        contaOriginal: response!.data.contaOriginal,
+        id: response?.data.id,
+        nome: response?.data.nome,
+        email: response?.data.email,
+        vinculadas: response?.data.vinculadas,
+        usandoContaVinculada: response?.data.usandoContaVinculada,
+        contaOriginal: response?.data.contaOriginal,
       });
     } catch (error: unknown) {
       setUser(null);

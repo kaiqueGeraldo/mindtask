@@ -36,7 +36,7 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       const response = await getAllGrupos(user.id);
-      const gruposOrdenados = response!.data.sort(
+      const gruposOrdenados = response?.data.sort(
         (a: Grupo, b: Grupo) => a.ordem - b.ordem
       );
       setGrupos(gruposOrdenados);
