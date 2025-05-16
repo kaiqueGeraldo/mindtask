@@ -91,22 +91,6 @@ body {
   background: #051026;
 }
 
-@keyframes dragging {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(1deg) scale(1.05);
-  }
-  100% {
-    transform: rotate(-1deg) scale(1.05);
-  }
-}
-
-.animate-dragging {
-  animation: dragging 0.5s infinite alternate ease-in-out;
-}
-
 .custom-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;

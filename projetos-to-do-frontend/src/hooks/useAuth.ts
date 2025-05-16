@@ -117,7 +117,8 @@ export function useAuth() {
           setModalAberto(true);
           return;
         } else {
-          await login(formData.email, formData.senha);
+          const response = await login(formData.email, formData.senha);
+          localStorage.setItem("token", response?.data.token);
         }
       } else {
         if (isVinculo && vinculoToken) {
@@ -134,7 +135,8 @@ export function useAuth() {
           return;
         } else {
           await register(formData.nome, formData.email, formData.senha);
-          await login(formData.email, formData.senha);
+          const response = await login(formData.email, formData.senha);
+          localStorage.setItem("token", response?.data.token);
         }
       }
 
@@ -193,11 +195,12 @@ export function useAuth() {
   const handleLogout = async (onClose: () => void) => {
     try {
       await logout();
-      await clearUser();
+      localStorage.removeItem("token");
+      clearUser();
       onClose();
       router.push("/auth");
     } catch (error: unknown) {
-      console.log(error)
+      console.log(error);
       alert("Erro ao sair da conta! Tente novamente.");
     }
   };

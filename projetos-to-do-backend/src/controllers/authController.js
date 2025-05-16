@@ -76,18 +76,11 @@ const login = async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-            path: "/",
-        });
-
         const vinculadas = await vinculoModel.listarContasVinculadas(usuario.id);
 
         res.json({
             message: 'Login bem-sucedido!',
+            token,
             usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email },
             vinculadas,
         });
@@ -98,9 +91,8 @@ const login = async (req, res) => {
 
 // Logout
 const logout = async (req, res) => {
-    res.clearCookie("token", { path: "/" });
     res.json({ message: "Logout realizado com sucesso" });
-}
+};
 
 // Gerar token
 const gerarToken = () => crypto.randomBytes(3).toString('hex').toUpperCase();

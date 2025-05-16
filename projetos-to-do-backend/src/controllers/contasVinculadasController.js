@@ -72,24 +72,19 @@ const trocarConta = async (req, res) => {
         if (voltandoParaOriginal) {
             const contaOriginal = await authModel.buscarUsuarioPorId(contaAlvoId);
             if (!contaOriginal) {
-                return res
-                    .status(404)
-                    .json({ error: "Conta original não encontrada." });
+                return res.status(404).json({ error: "Conta original não encontrada." });
             }
 
-            // Gera token padrão (sem `contaOriginal`, sem `usandoContaVinculada`)
-            const vinculadas = await vinculoModel.listarContasVinculadas(
-                contaOriginal.id
-            );
+            const vinculadas = await vinculoModel.listarContasVinculadas(contaOriginal.id);
 
             novoPayload = {
                 id: contaOriginal.id,
                 nome: contaOriginal.nome,
                 email: contaOriginal.email,
-                vinculadas: vinculadas.map((v) => ({
+                vinculadas: vinculadas.map(v => ({
                     id: v.id,
                     nome: v.nome,
-                    email: v.email,
+                    email: v.email
                 })),
             };
         } else {
@@ -98,45 +93,32 @@ const trocarConta = async (req, res) => {
             if (req.user.usandoContaVinculada && req.user.contaOriginal) {
                 const vinculadasDaOriginal =
                     await vinculoModel.listarContasVinculadas(req.user.contaOriginal.id);
-                autorizado = vinculadasDaOriginal.some(
-                    (c) => c.id === contaAlvoId
-                );
+                autorizado = vinculadasDaOriginal.some(c => c.id === contaAlvoId);
             } else {
                 const vinculo = await vinculoModel.verificarVinculoExistente(
-                    usuarioAtualId,
-                    contaAlvoId
+                    usuarioAtualId, contaAlvoId
                 );
                 autorizado = vinculo?.aprovada;
             }
 
             if (!autorizado) {
-                return res
-                    .status(403)
-                    .json({ error: "A conta não está vinculada ou aprovada." });
+                return res.status(403).json({ error: "A conta não está vinculada ou aprovada." });
             }
 
             const contaVinculada = await authModel.buscarUsuarioPorId(contaAlvoId);
             if (!contaVinculada) {
-                return res
-                    .status(404)
-                    .json({ error: "Conta vinculada não encontrada." });
+                return res.status(404).json({ error: "Conta vinculada não encontrada." });
             }
 
             const contaOriginal = await authModel.buscarUsuarioPorId(
-                req.user.usandoContaVinculada
-                    ? req.user.contaOriginal.id
-                    : usuarioAtualId
+                req.user.usandoContaVinculada ? req.user.contaOriginal.id : usuarioAtualId
             );
 
             if (!contaOriginal) {
-                return res
-                    .status(404)
-                    .json({ error: "Conta original não encontrada." });
+                return res.status(404).json({ error: "Conta original não encontrada." });
             }
 
-            const vinculadasDaOriginal = await vinculoModel.listarContasVinculadas(
-                contaOriginal.id
-            );
+            const vinculadasDaOriginal = await vinculoModel.listarContasVinculadas(contaOriginal.id);
 
             novoPayload = {
                 id: contaVinculada.id,
@@ -147,10 +129,10 @@ const trocarConta = async (req, res) => {
                     id: contaOriginal.id,
                     nome: contaOriginal.nome,
                     email: contaOriginal.email,
-                    vinculadas: vinculadasDaOriginal.map((v) => ({
+                    vinculadas: vinculadasDaOriginal.map(v => ({
                         id: v.id,
                         nome: v.nome,
-                        email: v.email,
+                        email: v.email
                     })),
                 },
             };
@@ -158,14 +140,6 @@ const trocarConta = async (req, res) => {
 
         const novoToken = jwt.sign(novoPayload, process.env.JWT_SECRET, {
             expiresIn: "7d",
-        });
-
-        res.cookie("token", novoToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            secure: true,
-            sameSite: 'None',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         res.json({ token: novoToken });

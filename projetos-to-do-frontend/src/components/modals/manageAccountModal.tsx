@@ -3,7 +3,6 @@ import { useUser } from "@/hooks/useUser";
 import { Plus } from "lucide-react";
 import { UserCard } from "../userCard";
 import { trocarConta } from "@/services/accountService";
-import { setCookie } from "cookies-next";
 import { Usuario } from "@/models/usuarioModel";
 import { useModals } from "@/hooks/useModals";
 
@@ -29,7 +28,7 @@ export function ManageAccountModal({
   async function handleTrocarConta(contaId: number) {
     try {
       const response = await trocarConta(contaId);
-      setCookie("token", response?.data.token);
+      localStorage.setItem("token", response?.data.token);
       onSuccess();
       window.location.href = "/";
     } catch (error) {

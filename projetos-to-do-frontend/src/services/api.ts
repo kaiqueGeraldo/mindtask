@@ -5,10 +5,18 @@ type ApiRequestOptions = RequestInit & { isBlob?: boolean };
 export async function apiRequest(endpoint: string, options: ApiRequestOptions) {
   const { isBlob, ...fetchOptions } = options;
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  const headers = {
+    ...(fetchOptions.headers || {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+
   try {
     const response = await fetch(`${URL_BASE}${endpoint}`, {
       ...fetchOptions,
-      credentials: "include",
+      headers,
     });
 
     let data;
