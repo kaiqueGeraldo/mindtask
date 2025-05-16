@@ -1,25 +1,14 @@
-"use client";
+import { Suspense } from "react";
+import PrivateLayout from "@/layouts/PrivateLayout";
 
-import { usePathname } from "next/navigation";
-import { Sidebar } from "@/components/sidebar/sidebar";
-
-export default function PrivateLayout({
+export default function PrivateLayoutWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  if (pathname === "/configuracoes") {
-    return <>{children}</>;
-  }
-
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <main id="children" className="flex-1 overflow-auto custom-scroll-2">
-        {children}
-      </main>
-    </div>
+    <Suspense fallback={<div>Carregando layout...</div>}>
+      <PrivateLayout>{children}</PrivateLayout>
+    </Suspense>
   );
 }

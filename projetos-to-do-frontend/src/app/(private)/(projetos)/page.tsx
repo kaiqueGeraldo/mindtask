@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import ProjetosScreen from "@/screens/(projetos)/projetosScreen";
 
 export const metadata = {
@@ -6,9 +5,5 @@ export const metadata = {
 };
 
 export default function ProjetosPage() {
-  return (
-    <Suspense fallback={<div>Carregando...</div>}>
-      <ProjetosScreen />
-    </Suspense>
-  );
+  return <ProjetosScreen />;
 }

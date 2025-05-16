@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ListaProjetosBase from "@/components/layouts/listaProjetosBase";
+import ListaProjetosBase from "@/layouts/listaProjetosBase";
 import { useProject } from "@/hooks/useProject";
 import { useGroup } from "@/hooks/useGroup";
 
