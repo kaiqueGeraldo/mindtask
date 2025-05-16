@@ -34,14 +34,6 @@ export function GruposEProjetos() {
     handleDragEnd,
   } = useDragAndDrop();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
-
-  const projetosSemGrupo = projetos.filter((p) => p.grupo_id === null);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(TouchSensor, {
@@ -52,6 +44,13 @@ export function GruposEProjetos() {
     })
   );
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
+  const projetosSemGrupo = projetos.filter((p) => p.grupo_id === null);
   return (
     <DndContext
       sensors={sensors}
