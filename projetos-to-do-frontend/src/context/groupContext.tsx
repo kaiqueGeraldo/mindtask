@@ -36,7 +36,7 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       const response = await getAllGrupos(user.id);
-      const gruposOrdenados = response.data.sort(
+      const gruposOrdenados = response!.data.sort(
         (a: Grupo, b: Grupo) => a.ordem - b.ordem
       );
       setGrupos(gruposOrdenados);
@@ -45,9 +45,13 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
         .filter((g: Grupo) => g.expandido)
         .map((g: Grupo) => g.id);
       setExpandedGroups(idsExpandido);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao carregar grupos:", error);
-      setError(error.message || "Erro desconhecido");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     } finally {
       setLoading(false);
     }
@@ -58,9 +62,13 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     try {
       await updateGrupo(id, { nome });
       fetchGrupos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao renomear grupo:", error);
-      setError(error.message || "Erro ao renomear grupo");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 
@@ -68,7 +76,7 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     try {
       await updateGrupo(id, { expandido });
       fetchGrupos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao atualizar estado expandido do grupo:", error);
     }
   }
@@ -78,9 +86,13 @@ export function GroupProvider({ children }: { children: React.ReactNode }) {
     try {
       await deleteGrupo(id);
       fetchGrupos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao excluir grupo:", error);
-      setError(error.message || "Erro ao excluir grupo");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 

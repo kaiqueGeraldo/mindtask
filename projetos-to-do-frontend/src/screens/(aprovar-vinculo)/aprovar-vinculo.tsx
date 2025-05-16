@@ -33,15 +33,18 @@ export default function AprovarVinculoScreen() {
           "Vínculo aprovado com sucesso! Agora você pode acessar essa conta vinculada em sua área pessoal."
         );
       })
-      .catch((err) => {
-        if (err?.status === 410 || err?.status == 401) {
-          setMensagem(
-            "Este link já foi utilizado. Solicite um novo se precisar."
-          );
-        } else {
-          setMensagem(
-            "Erro ao aprovar vínculo. O link pode estar expirado ou inválido."
-          );
+      .catch((error: unknown) => {
+        if (typeof error === "object" && error !== null && "message" in error) {
+          const err = error as { message: string; status?: number };
+          if (err?.status === 410 || err?.status == 401) {
+            setMensagem(
+              "Este link já foi utilizado. Solicite um novo se precisar."
+            );
+          } else {
+            setMensagem(
+              "Erro ao aprovar vínculo. O link pode estar expirado ou inválido."
+            );
+          }
         }
         setStatus("error");
       });

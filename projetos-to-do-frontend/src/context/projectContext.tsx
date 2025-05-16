@@ -52,7 +52,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await getAllProjetos(user.id);
 
-      const projetosOrdenados = response.data
+      const projetosOrdenados = response!.data
         .sort((a: Projeto, b: Projeto) => a.ordem - b.ordem)
         .map((projeto: any) => {
           const tarefasPendentes = projeto.tarefas
@@ -85,9 +85,13 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
             ) ?? null
           : null
       );
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao carregar projetos:", error);
-      setError(error.message || "Erro desconhecido");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     } finally {
       setLoading(false);
     }
@@ -97,9 +101,13 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     try {
       await updateProjetoGrupo(projetoId, grupoId);
       fetchProjetos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao mover projeto:", error);
-      setError(error.message || "Erro ao mover projeto");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 
@@ -108,9 +116,13 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     try {
       await updateProjeto(id, dadosAtualizacao);
       fetchProjetos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao editar projeto:", error);
-      setError(error.message || "Erro ao editar projeto");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 
@@ -119,9 +131,13 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     try {
       await deleteProjeto(id);
       fetchProjetos();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erro ao excluir projeto:", error);
-      setError(error.message || "Erro ao excluir projeto");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Erro desconhecido");
+      }
     }
   }
 

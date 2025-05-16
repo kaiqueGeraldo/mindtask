@@ -100,22 +100,23 @@ export function GruposEProjetos() {
       </div>
 
       <DragOverlay>
-        {activeItem?.type === "grupo" && (
-          <div className="flex items-center gap-2 px-4 py-2 rounded shadow-md backdrop-blur-md bg-white/10 border border-white/20 text-white font-semibold animate-dragging cursor-grabbing">
-            <Folder className="w-5 h-5 text-blue-400 shrink-0" />
-            <span className="truncate whitespace-nowrap overflow-hidden">
-              {activeItem.grupo.nome}
-            </span>
-          </div>
-        )}
-        {activeItem?.type === "projeto" && (
+        {activeItem?.type === "projeto" ? (
+          // Projeto
           <div className="flex items-center gap-2 px-4 py-2 rounded-lg shadow-md backdrop-blur-md bg-white/10 border border-white/20 text-white font-semibold animate-dragging cursor-grabbing">
             <Boxes className="w-4 h-4 text-white/70 shrink-0" />
             <span className="truncate whitespace-nowrap overflow-hidden">
-              {activeItem.projeto.nome}
+              {activeItem.nome}
             </span>
           </div>
-        )}
+        ) : activeItem?.type === "grupo" ? (
+          // Grupo
+          <div className="flex items-center gap-2 px-4 py-2 rounded shadow-md backdrop-blur-md bg-white/10 border border-white/20 text-white font-semibold animate-dragging cursor-grabbing">
+            <Folder className="w-5 h-5 text-blue-400 shrink-0" />
+            <span className="truncate whitespace-nowrap overflow-hidden">
+              {activeItem.nome}
+            </span>
+          </div>
+        ) : null}
       </DragOverlay>
     </DndContext>
   );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useCallback, useRef, useState } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -6,6 +6,9 @@ import { useGroup } from "@/hooks/useGroup";
 import { useProject } from "@/hooks/useProject";
 import { updateOrdemGrupos } from "@/services/groupService";
 import { updateOrdemProjetos } from "@/services/projectService";
+import { Projeto } from "@/models/projetoModel";
+import { Grupo } from "@/models/grupoModel";
+import { DragEndEvent, DragOverEvent, DragStartEvent } from "@dnd-kit/core";
 
 export function useDragAndDrop() {
   const {
@@ -17,7 +20,12 @@ export function useDragAndDrop() {
   } = useGroup();
   const { projetos, setProjetos, moveProjetoToGrupo } = useProject();
 
-  const [activeItem, setActiveItem] = useState<any>(null);
+  type ProjetoDragItem = Projeto & { type: "projeto" };
+  type GrupoDragItem = Grupo & { type: "grupo" };
+
+  type ActiveDragItem = ProjetoDragItem | GrupoDragItem;
+
+  const [activeItem, setActiveItem] = useState<ActiveDragItem | null>(null);
 
   const expandTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const openedByHoverRef = useRef<Set<number>>(new Set());
@@ -37,12 +45,19 @@ export function useDragAndDrop() {
     });
   };
 
-  const handleDragStart = (event: any) => {
-    setActiveItem(event.active.data.current);
-    openedByHoverRef.current.clear();
+  const handleDragStart = (event: DragStartEvent) => {
+    const data = event.active.data.current;
+
+    if (data?.type === "projeto") {
+      setActiveItem({ ...data.projeto, type: "projeto" });
+    } else if (data?.type === "grupo") {
+      setActiveItem({ ...data.grupo, type: "grupo" });
+    } else {
+      setActiveItem(null);
+    }
   };
 
-  const handleDragOver = (event: any) => {
+  const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event;
     if (!active || !over) return;
 
@@ -71,7 +86,7 @@ export function useDragAndDrop() {
   };
 
   const handleDragEnd = useCallback(
-    async (event: any) => {
+    async (event: DragEndEvent) => {
       const { active, over } = event;
       if (!over || !active) {
         setActiveItem(null);

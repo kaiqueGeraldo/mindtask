@@ -56,9 +56,12 @@ export default function ProjetoScreen() {
     const fetchProjeto = async () => {
       try {
         const response = await getProjetoPorId(Number(id), user.id);
-        setProjeto(response.data);
-      } catch (err) {
-        setMensagem("Projeto não encontrado.");
+        setProjeto(response!.data);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setMensagem("Projeto não encontrado.");
+          console.log(error);
+        }
       } finally {
         setLoading(false);
       }

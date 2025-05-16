@@ -65,7 +65,7 @@ function TarefasInner() {
       <DndContext
         collisionDetection={closestCenter}
         onDragEnd={({ active, over }) => {
-          if (over) handleDragEnd(Number(active.id), Number(over.id));
+          if (over) void handleDragEnd(Number(active.id), Number(over.id));
         }}
       >
         <SortableContext

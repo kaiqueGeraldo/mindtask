@@ -1,4 +1,4 @@
-export const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE!;
+export const URL_BASE = "http://localhost:5005/api";
 
 type ApiRequestOptions = RequestInit & { isBlob?: boolean };
 
@@ -34,9 +34,12 @@ export async function apiRequest(endpoint: string, options: ApiRequestOptions) {
     }
 
     return { status: response.status, data };
-  } catch (error: any) {
-    throw error.status
-      ? error
-      : { status: 500, message: "Erro ao conectar à API" };
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "message" in error) {
+      const err = error as { message: string; status: number };
+      throw err.status
+        ? err
+        : { status: 500, message: "Erro ao conectar à API" };
+    }
   }
 }

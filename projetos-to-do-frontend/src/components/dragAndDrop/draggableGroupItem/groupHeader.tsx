@@ -1,6 +1,8 @@
 import { Folder, ChevronDown, GripVertical } from "lucide-react";
 import { motion } from "framer-motion";
 import { EditableTitle } from "@/components/editableTitle";
+import { DraggableAttributes } from '@dnd-kit/core';
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 
 interface GroupHeaderProps {
   grupo: { id: number; nome: string };
@@ -8,8 +10,8 @@ interface GroupHeaderProps {
   toggleExpand: () => void;
   grupoEmEdicao: number | null;
   setGrupoEmEdicao: (id: number | null) => void;
-  listeners: any;
-  attributes: any;
+  listeners: SyntheticListenerMap | undefined;
+  attributes: DraggableAttributes;
   onSalvar: (novoNome: string) => void;
 }
 

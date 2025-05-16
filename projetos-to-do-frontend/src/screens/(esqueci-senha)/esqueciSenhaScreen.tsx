@@ -58,11 +58,9 @@ export default function EsqueciSenhaScreen() {
               error={errors.email}
             />
 
-            <Button
-              isLoading={isLoading}
-              children={"Enviar"}
-              className="flex w-full"
-            />
+            <Button isLoading={isLoading} className="flex w-full">
+              Enviar
+            </Button>
           </form>
         )}
 
@@ -108,11 +106,9 @@ export default function EsqueciSenhaScreen() {
               error={errors.confirmarNovaSenha}
             />
 
-            <Button
-              isLoading={isLoading}
-              children={"Confirmar"}
-              className="flex w-full"
-            />
+            <Button isLoading={isLoading} className="flex w-full">
+              Confirmar
+            </Button>
           </form>
         )}
       </div>

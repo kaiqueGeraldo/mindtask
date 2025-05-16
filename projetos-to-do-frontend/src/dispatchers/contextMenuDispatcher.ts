@@ -40,7 +40,7 @@ export function dispatchContextAction(
           fetchProjetos();
           fetchGrupos();
         })
-        .catch((err: any) => {
+        .catch((err: unknown) => {
           console.error("Erro ao desagrupar projetos:", err);
         });
     }
@@ -54,7 +54,7 @@ export function dispatchContextAction(
           fetchProjetos();
           fetchGrupos();
         })
-        .catch((err: any) => {
+        .catch((err: unknown) => {
           console.error("Erro ao remover projeto:", err);
         });
     } else if (action === "rename") {
@@ -69,7 +69,7 @@ export function dispatchContextAction(
           fetchProjetos();
           fetchGrupos();
         })
-        .catch((err: any) => {
+        .catch((err: unknown) => {
           console.error(
             `Erro ao ${
               action === "archive_project" ? "arquivar" : "desarquivar"
@@ -82,7 +82,7 @@ export function dispatchContextAction(
     const resultado = getTarefaById(id, projetos);
     if (!resultado) return;
 
-    const { tarefa, projeto } = resultado;
+    const { tarefa } = resultado;
 
     if (action === "rename") {
       setTarefaEmEdicao(tarefa.id);

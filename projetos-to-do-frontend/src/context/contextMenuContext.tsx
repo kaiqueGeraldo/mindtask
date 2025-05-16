@@ -14,6 +14,7 @@ import { useProject } from "@/hooks/useProject";
 import { useGroup } from "@/hooks/useGroup";
 import { deleteProjeto } from "@/services/projectService";
 import { useRouter } from "next/navigation";
+import { Projeto } from "@/models/projetoModel";
 
 interface ContextMenuContextValue {
   openMenu: (
@@ -29,8 +30,8 @@ interface ContextMenuContextValue {
   setProjetoEmEdicao: (id: number | null) => void;
   tarefaEmEdicao: number | null;
   setTarefaEmEdicao: (id: number | null) => void;
-  projetoParaExcluir: boolean;
-  setProjetoParaExcluir: (open: boolean) => void;
+  projetoParaExcluir: Projeto | null;
+  setProjetoParaExcluir: (open: Projeto) => void;
   confirmandoExclusao: boolean;
   setConfirmandoExclusao: (open: boolean) => void;
   handleConfirmarExclusao: () => void;
@@ -53,7 +54,7 @@ export function ContextMenuProvider({ children }: { children: ReactNode }) {
   const [grupoEmEdicao, setGrupoEmEdicao] = useState<number | null>(null);
   const [projetoEmEdicao, setProjetoEmEdicao] = useState<number | null>(null);
   const [tarefaEmEdicao, setTarefaEmEdicao] = useState<number | null>(null);
-  const [projetoParaExcluir, setProjetoParaExcluir] = useState<any | null>(
+  const [projetoParaExcluir, setProjetoParaExcluir] = useState<Projeto | null>(
     null
   );
   const [confirmandoExclusao, setConfirmandoExclusao] = useState(false);

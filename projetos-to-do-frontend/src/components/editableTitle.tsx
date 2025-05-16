@@ -13,7 +13,6 @@ interface EditableTitleProps {
 }
 
 export function EditableTitle({
-  id,
   valor,
   maxLength,
   aoSalvar,

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -57,13 +57,16 @@ export function useEsqueciSenha() {
         "E-mail de recuperação enviado! Verifique sua caixa de entrada."
       );
       setStep(2);
-    } catch (err: any) {
-      setErrors({
-        email:
-          err.status === 404
-            ? "E-mail não encontrado!"
-            : "Erro ao enviar e-mail.",
-      });
+    } catch (error: unknown) {
+      if (typeof error === "object" && error !== null && "message" in error) {
+        const err = error as { message: string; status?: number };
+        setErrors({
+          email:
+            err.status === 404
+              ? "E-mail não encontrado!"
+              : "Erro ao enviar e-mail.",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -98,11 +101,14 @@ export function useEsqueciSenha() {
       } else {
         setErrors({ general: "Erro ao alterar a senha." });
       }
-    } catch (err: any) {
-      setErrors({
-        token: err.status === 400 ? "Token inválido." : "",
-        general: err.message || "Erro ao alterar a senha.",
-      });
+    } catch (error: unknown) {
+      if (typeof error === "object" && error !== null && "message" in error) {
+        const err = error as { message: string; status?: number };
+        setErrors({
+          token: err.status === 400 ? "Token inválido." : "",
+          general: err.message || "Erro ao alterar a senha.",
+        });
+      }
     } finally {
       setIsLoading(false);
     }

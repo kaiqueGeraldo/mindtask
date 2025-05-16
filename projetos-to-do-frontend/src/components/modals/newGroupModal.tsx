@@ -58,11 +58,9 @@ export function NewGroupModal({
           }}
         />
 
-        <Button
-          onClick={handleSubmit}
-          isLoading={loading}
-          children={"Criar Grupo"}
-        />
+        <Button onClick={handleSubmit} isLoading={loading}>
+          Criar Grupo
+        </Button>
       </div>
     </Modal>
   );

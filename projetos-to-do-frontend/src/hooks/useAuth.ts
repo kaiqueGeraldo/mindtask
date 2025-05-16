@@ -51,7 +51,7 @@ export function useAuth() {
 
       verificarVinculoToken(token)
         .then((res) => {
-          if (res.data.valido) {
+          if (res!.data.valido) {
             setIsVinculo(true);
             setVinculoToken(token);
           } else {
@@ -140,24 +140,30 @@ export function useAuth() {
 
       await refetchUser();
       router.push("/");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(error);
 
-      if (isLogin) {
-        if (error.status === 404 || error.status === 401) {
-          setErrors({
-            email: "Credenciais inválidas",
-            senha: "Credenciais inválidas",
-          });
+      if (typeof error === "object" && error !== null && "message" in error) {
+        const err = error as { message: string; status?: number };
+
+        if (isLogin) {
+          if (err.status === 404 || err.status === 401) {
+            setErrors({
+              email: "Credenciais inválidas",
+              senha: "Credenciais inválidas",
+            });
+          } else {
+            setApiError(err.message || "Erro desconhecido");
+          }
         } else {
-          setApiError(error.message || "Erro desconhecido");
+          if (err.status === 400 && err.message.includes("E-mail")) {
+            setErrors({ email: err.message });
+          } else {
+            setApiError(err.message || "Erro ao registrar");
+          }
         }
       } else {
-        if (error.status === 400 && error.message.includes("E-mail")) {
-          setErrors({ email: error.message });
-        } else {
-          setApiError(error.message || "Erro ao registrar");
-        }
+        setApiError("Erro inesperado");
       }
     } finally {
       setIsLoading(false);

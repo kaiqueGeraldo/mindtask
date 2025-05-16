@@ -27,15 +27,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const response = await getUserFromToken();
       setUser({
-        id: response.data.id,
-        nome: response.data.nome,
-        email: response.data.email,
-        vinculadas: response.data.vinculadas,
-        usandoContaVinculada: response.data.usandoContaVinculada,
-        contaOriginal: response.data.contaOriginal,
+        id: response!.data.id,
+        nome: response!.data.nome,
+        email: response!.data.email,
+        vinculadas: response!.data.vinculadas,
+        usandoContaVinculada: response!.data.usandoContaVinculada,
+        contaOriginal: response!.data.contaOriginal,
       });
-    } catch (error) {
+    } catch (error: unknown) {
       setUser(null);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -49,9 +50,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await removeAccount(contaId);
       await refetchUser();
-    } catch (error: any) {
-      console.error("Erro ao remover conta vinculada:", error.data);
-      alert(`Erro ao remover conta vinculada: ${error.data}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Erro ao remover conta vinculada:", error.message);
+        alert(`Erro ao remover conta vinculada: ${error.message}`);
+      }
     }
   };
 

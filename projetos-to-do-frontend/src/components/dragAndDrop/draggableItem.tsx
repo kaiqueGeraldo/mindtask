@@ -1,33 +1,27 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Boxes, GripVertical, Star } from "lucide-react";
+import { Boxes, GripVertical } from "lucide-react";
 import { useContextMenu } from "@/hooks/useContextMenu";
 import { EditableTitle } from "@/components/editableTitle";
 import { updateNomeProjeto } from "@/services/projectService";
 import { useProject } from "@/hooks/useProject";
 import { useRouter } from "next/navigation";
+import { Projeto } from "@/models/projetoModel";
 
 interface DraggableItemProps {
-  projeto: any;
+  projeto: Projeto;
   containerId: string;
 }
 
 export function DraggableItem({ projeto, containerId }: DraggableItemProps) {
-  const {
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: `projeto-${projeto.id}`,
-    data: {
-      type: "projeto",
-      projeto,
-      containerId,
-      parentId: projeto.grupo_id ? `grupo-${projeto.grupo_id}` : null,
-    },
-  });
+  const { listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({
+      id: `projeto-${projeto.id}`,
+      data: {
+        type: "projeto",
+        projeto,
+      },
+    });
 
   const {
     openMenu,

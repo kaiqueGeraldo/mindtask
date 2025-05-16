@@ -30,7 +30,10 @@ export function DraggableGroupItem({
     isDragging,
   } = useSortable({
     id: `grupo-${grupo.id}`,
-    data: { type: "grupo", grupo },
+    data: {
+      type: "grupo",
+      grupo,
+    },
   });
 
   const { openMenu, grupoEmEdicao, setGrupoEmEdicao } = useContextMenu();
@@ -66,7 +69,7 @@ export function DraggableGroupItem({
           }`}
           onContextMenu={(e) => {
             e.stopPropagation();
-            openMenu(e, { type: "grupo", id: grupo.id, });
+            openMenu(e, { type: "grupo", id: grupo.id });
           }}
         >
           <GroupHeader
