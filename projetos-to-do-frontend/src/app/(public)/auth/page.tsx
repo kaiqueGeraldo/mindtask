@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import AuthScreen from "@/screens/(auth)/authScreen";
 
 export const metadata = {
@@ -5,5 +6,9 @@ export const metadata = {
 };
 
 export default function PublicPage() {
-  return <AuthScreen />;
+  return (
+      <Suspense fallback={<div>Carregando...</div>}>
+        <AuthScreen />
+      </Suspense>
+    );
 }
