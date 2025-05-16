@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import { getUserFromToken } from "@/services/authService";
+import { useSidebar } from "@/hooks/useSidebar";
 
 export default function PrivateLayout({
   children,
@@ -13,6 +14,8 @@ export default function PrivateLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const { scrollContainerRef } = useSidebar();
+  
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -54,7 +57,10 @@ export default function PrivateLayout({
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <main id="children" className="flex-1 overflow-auto custom-scroll-2">
+      <main
+        ref={scrollContainerRef}
+        className="flex-1 overflow-auto custom-scroll-2"
+      >
         {children}
       </main>
     </div>

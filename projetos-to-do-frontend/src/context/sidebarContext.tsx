@@ -17,6 +17,7 @@ interface SidebarContextType {
   showAccountOptions: boolean;
   setShowAccountOptions: React.Dispatch<React.SetStateAction<boolean>>;
   menuRef: RefObject<HTMLDivElement | null>;
+  scrollContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -27,17 +28,23 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
 
   const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = document.getElementById("children");
+    const element = scrollContainerRef.current;
     if (!element) return;
 
-    const handleScroll = () => setScrolled(element.scrollTop > 25);
+    const handleScroll = () => {
+      setScrolled(element.scrollTop > 25);
+    };
+
     element.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => element.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      element.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollContainerRef.current]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -66,6 +73,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
         showAccountOptions,
         setShowAccountOptions,
         menuRef,
+        scrollContainerRef,
       }}
     >
       {children}

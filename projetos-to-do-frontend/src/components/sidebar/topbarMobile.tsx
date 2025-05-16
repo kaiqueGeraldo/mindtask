@@ -11,7 +11,7 @@ export function SidebarTopbarMobile() {
       }`}
     >
       <button
-        className="p-2 rounded-full shadow-md bg-[#081A40] cursor-pointer"
+        className="p-2 rounded-full shadow-md bg-[#0e224d] cursor-pointer"
         onClick={() => setSidebarOpen(true)}
       >
         <Menu className="w-6 h-6 text-white" />

@@ -121,7 +121,6 @@ body {
 .custom-scroll-2 {
   scrollbar-width: 1px;
   -ms-overflow-style: none;
-  position: relative;
 }
 
 .custom-scroll-2::-webkit-scrollbar {

@@ -128,7 +128,7 @@ export function TecnologiaSelector({
           })}
         </div>
       ) : (
-        <div className="font-medium text-center">
+        <div className="font-medium text-center text-white">
           Sem Resultados Para Essa Pesquisa
         </div>
       )}
